@@ -28,7 +28,7 @@ test/fixtures
 In the command line run:
 
 ```bash
-npmignore "test/fixtures"
+npmignore -i "test/fixtures"
 ```
 
 An `.npmignore` file will be created, or updated:
