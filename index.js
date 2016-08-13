@@ -37,7 +37,7 @@ module.exports = function npmignore(npm, git, options) {
       git.attributes = parseGitAttributes(git.attributes);
     }
 
-    git = [].concat('# gitignore', rulesOnly(git.ignore), '', '# gitattributes', rulesOnly(git.attributes));
+    git = [].concat(git.ignore, git.attributes);
   } else if (typeof git === 'string') {
     git = split(git);
   }
@@ -146,18 +146,6 @@ function split(str) {
   return (str || '\n\n')
     .replace(/\r/g, '')
     .split('\n');
-}
-
-function rulesOnly(lines) {
-  var result = [];
-
-  lines.forEach(function (line) {
-    if (!(/^\s*$/.test(line) || /^#/.test(line))) {
-      result.push(line);
-    }
-  });
-
-  return result;
 }
 
 function parseGitAttributes(str) {
