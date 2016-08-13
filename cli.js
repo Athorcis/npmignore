@@ -54,7 +54,7 @@ function read(fp) {
   if (fp.indexOf(',') > -1) {
     return fp.split(/,/g).map(read).join('\n');
   }
-  var original = fs;
+  var original = fp;
   if (!path.isAbsolute(fp)) {
     fp = path.join(process.cwd(), fp);
   }
