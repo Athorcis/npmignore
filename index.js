@@ -151,11 +151,14 @@ function split(str) {
 function parseGitAttributes(str) {
   var result = [];
   var lines = split(str);
-  var rIgnore = /^(\s*(.+?)\s+export-ignore\s*)|(# Rules from:.+)$/;
+  var rIgnore = /^(\s*(.+?)\s+export-ignore\s*)$/;
+  var rComments = /^(# Rules from:.+)$/;
 
   lines.forEach(function (line) {
     if (rIgnore.test(line)) {
-      result.push(line.replace(rIgnore, '$1'));
+      result.push(line.replace(rIgnore, '$2'));
+    } else if (rComments.test(line)) {
+      result.push(line);
     }
   });
 
