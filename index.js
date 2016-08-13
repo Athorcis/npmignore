@@ -124,10 +124,10 @@ function format(git, npm) {
     res += git;
   }
 
-  res += '\n\n' + comment;
+  res += '\n\n' + comment + '\n';
 
   if (npm) {
-    res += '\n'+ npm;
+    res += npm;
   }
 
   return res;
