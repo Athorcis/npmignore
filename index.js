@@ -162,8 +162,6 @@ function parseGitAttributes(str) {
     }
   });
 
-  result.unshift("# .gitattributes");
-
   return result;
 }
 
