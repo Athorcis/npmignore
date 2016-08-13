@@ -54,11 +54,12 @@ function read(fp) {
   if (fp.indexOf(',') > -1) {
     return fp.split(/,/g).map(read).join('\n');
   }
+  var original = fs;
   if (!path.isAbsolute(fp)) {
     fp = path.join(process.cwd(), fp);
   }
   if (!fs.existsSync(fp)) {
     return null;
   }
-  return '# Rules from: ' + fp + '\n' + fs.readFileSync(fp, 'utf8');
+  return '# Rules from: ' + original + '\n' + fs.readFileSync(fp, 'utf8');
 }
