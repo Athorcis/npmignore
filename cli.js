@@ -29,7 +29,10 @@ var u = argv.u || argv.unignore;
 if (typeof i === 'string') i = i.split(',');
 if (typeof u === 'string') u = u.split(',');
 
-var git = read(gitignore);
+var git = {
+  ignore: read(gitignore),
+  attributes: read('.gitattributes')
+};
 var npm = read(npmignore);
 
 // Parse the files and create a new `.npmignore` file

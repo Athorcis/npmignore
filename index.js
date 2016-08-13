@@ -21,14 +21,24 @@ var re = /#\s*npmignore/;
  */
 
 module.exports = function npmignore(npm, git, options) {
-  if (typeof git !== 'string') {
+  if (typeof git !== 'string' && typeof options !== 'object') {
     options = git;
     git = '';
   }
 
   options = options || {};
 
-  if (typeof git === 'string') {
+  if (git.hasOwnProperty('ignore') && git.hasOwnProperty('attributes')) {
+    if (typeof git.ignore === 'string') {
+      git.ignore = split(git.ignore);
+    }
+
+    if (typeof git.attributes === 'string') {
+      git.attributes = parseGitAttributes(git.attributes);
+    }
+
+    git = [].concat(git.ignore, git.attributes);
+  } else if (typeof git === 'string') {
     git = split(git);
   }
 
@@ -134,6 +144,22 @@ function split(str) {
   return (str || '\n\n')
     .replace(/\r/g, '')
     .split('\n');
+}
+
+function parseGitAttributes(str) {
+  var result = [];
+  var lines = split(str);
+  var rIgnore = /^\s*(.+?)\s+export-ignore\s*$/;
+
+  lines.forEach(function (line) {
+    if (rIgnore.test(line)) {
+      result.push(line.replace(rIgnore, '$1'));
+    }
+  });
+
+  result.unshift("# .gitattributes");
+
+  return result;
 }
 
 /**
